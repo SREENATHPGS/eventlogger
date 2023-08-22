@@ -1,0 +1,12 @@
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -yy
+RUN apt install software-properties-common zip unzip python3-pip -y
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+RUN apt install sqlite3 -yy
+COPY <zipname>.zip /root/
+WORKDIR /root/
+RUN unzip <zipname>.zip -d app/
+WORKDIR /root/app/
+RUN pip install -r requirements.txt
+CMD [ "bash" , "./start_process_container.sh" ]
